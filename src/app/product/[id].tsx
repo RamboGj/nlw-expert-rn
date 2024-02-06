@@ -1,17 +1,25 @@
 import { PRODUCTS } from '@/utils/data/products'
 import { Image, Text, View } from 'react-native'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { formatCurrency } from '@/utils/functions'
 import { Button } from '@/components/atoms/Button'
 import { Feather } from '@expo/vector-icons'
 import { LinkButton } from '@/components/atoms/LinkButton'
+import { useCartStore } from '@/stores/CartStore'
 
 export default function ProductPage() {
+  const { add, products } = useCartStore()
   const { id } = useLocalSearchParams()
+  const { goBack } = useNavigation()
 
   const product = PRODUCTS.filter((product) => {
     return product.id === id
   })[0]
+
+  function handleAddToCard() {
+    add(product)
+    goBack()
+  }
 
   return (
     <View className="flex-1">
@@ -42,7 +50,7 @@ export default function ProductPage() {
         })}
 
         <View className="pt-5 pb-8 gap-5 mt-auto">
-          <Button>
+          <Button onPress={handleAddToCard}>
             <Button.Icon>
               <Feather name="plus-circle" size={20} />
             </Button.Icon>

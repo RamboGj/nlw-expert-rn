@@ -7,10 +7,18 @@ import { Header } from '@/components/molecules/Header'
 import { Product } from '@/components/atoms/Product'
 
 import { CATEGORIES, MENU } from '@/utils/data/products'
+import { useCartStore } from '@/stores/CartStore'
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     CATEGORIES[0],
+  )
+
+  const { products } = useCartStore()
+
+  const cartItemsQuantity = products.reduce(
+    (total, product) => total + product.quantity,
+    0,
   )
 
   const sectionListRef = useRef<SectionList>(null)
@@ -33,7 +41,7 @@ export default function Home() {
 
   return (
     <View className="flex-1 pt-8">
-      <Header title="Faça seu pedido" cartItemsCount={1} />
+      <Header title="Faça seu pedido" cartItemsCount={cartItemsQuantity} />
 
       <FlatList
         data={CATEGORIES}
