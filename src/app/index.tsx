@@ -1,13 +1,35 @@
+import { View, FlatList, SectionList, Text } from 'react-native'
+import { useState, useRef } from 'react'
+import { Link } from 'expo-router'
+
 import { CategoryButton } from '@/components/atoms/CategoryButton'
 import { Header } from '@/components/molecules/Header'
-import { View, FlatList } from 'react-native'
-import { CATEGORIES } from '@/utils/data/products'
-import { useState } from 'react'
+import { Product } from '@/components/atoms/Product'
+
+import { CATEGORIES, MENU } from '@/utils/data/products'
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     CATEGORIES[0],
   )
+
+  const sectionListRef = useRef<SectionList>(null)
+
+  function handleSelectCategory(category: string) {
+    setSelectedCategory(category)
+
+    const sectionIndex = CATEGORIES.findIndex((categoryFilter) => {
+      return categoryFilter === category
+    })
+
+    if (sectionListRef.current) {
+      sectionListRef.current.scrollToLocation({
+        animated: true,
+        sectionIndex,
+        itemIndex: 0,
+      })
+    }
+  }
 
   return (
     <View className="flex-1 pt-8">
@@ -21,18 +43,44 @@ export default function Home() {
 
           return (
             <CategoryButton
-              onPress={() => {
-                setSelectedCategory(item)
-              }}
+              onPress={() => handleSelectCategory(item)}
               isSelected={isSelected}
               title={item}
             />
           )
         }}
         horizontal
-        className="max-h-10 mt-5"
-        contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}
+        className="max-h-12 mt-5"
+        contentContainerStyle={{
+          gap: 12,
+          paddingHorizontal: 20,
+        }}
         showsHorizontalScrollIndicator={false}
+      />
+
+      <SectionList
+        ref={sectionListRef}
+        sections={MENU}
+        keyExtractor={(item) => item.id}
+        stickySectionHeadersEnabled={false}
+        renderItem={({ item }) => (
+          <Link href={`/product/${item.id}`} asChild>
+            <Product
+              description={item.description}
+              thumbnail={item.thumbnail}
+              title={item.title}
+              className="text-white"
+            />
+          </Link>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text className="text-white font-heading text-xl mt-8 mb-3">
+            {title}
+          </Text>
+        )}
+        className="flex-1 p-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
       />
     </View>
   )

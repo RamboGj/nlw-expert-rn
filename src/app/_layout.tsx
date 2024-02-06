@@ -1,13 +1,14 @@
-import { Slot } from "expo-router"
-import { SafeAreaView } from "react-native"
+/* eslint-disable camelcase */
+import { Slot } from 'expo-router'
+import { SafeAreaView } from 'react-native'
 import {
   Inter_400Regular,
   Inter_500Medium,
   Inter_600SemiBold,
   Inter_700Bold,
-  useFonts
-} from "@expo-google-fonts/inter"
-import { Loading } from "@/components/atoms/Loading"
+  useFonts,
+} from '@expo-google-fonts/inter'
+import { Loading } from '@/components/atoms/Loading'
 
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
