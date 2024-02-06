@@ -1,5 +1,5 @@
-import { CategoryButton } from '@/components/CategoryButton'
-import { Header } from '@/components/Header'
+import { CategoryButton } from '@/components/atoms/CategoryButton'
+import { Header } from '@/components/molecules/Header'
 import { View, FlatList } from 'react-native'
 import { CATEGORIES } from '@/utils/data/products'
 import { useState } from 'react'

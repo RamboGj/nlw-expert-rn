@@ -7,7 +7,7 @@ import {
   Inter_700Bold,
   useFonts
 } from "@expo-google-fonts/inter"
-import { Loading } from "@/components/Loading"
+import { Loading } from "@/components/atoms/Loading"
 
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
