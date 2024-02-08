@@ -6,8 +6,8 @@ import { CategoryButton } from '@/components/atoms/CategoryButton'
 import { Header } from '@/components/molecules/Header'
 import { Product } from '@/components/atoms/Product'
 
-import { CATEGORIES, MENU } from '@/utils/data/products'
-import { useCartStore } from '@/stores/CartStore'
+import { CATEGORIES, MENU, ProductProps } from '@/utils/data/products'
+import { useCartStore } from '@/stores/cartStore'
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -21,7 +21,7 @@ export default function Home() {
     0,
   )
 
-  const sectionListRef = useRef<SectionList>(null)
+  const sectionListRef = useRef<SectionList<ProductProps>>(null)
 
   function handleSelectCategory(category: string) {
     setSelectedCategory(category)

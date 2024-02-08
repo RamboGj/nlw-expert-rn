@@ -12,10 +12,11 @@ interface ProductProps extends TouchableOpacityProps {
   title: string
   description: string
   thumbnail: ImageProps
+  quantity?: number
 }
 
 export const Product = forwardRef<TouchableOpacity, ProductProps>(
-  ({ description, thumbnail, title, ...rest }, ref) => {
+  ({ description, thumbnail, title, quantity = 0, ...rest }, ref) => {
     return (
       <TouchableOpacity
         ref={ref}
@@ -29,9 +30,18 @@ export const Product = forwardRef<TouchableOpacity, ProductProps>(
         />
 
         <View className="flex-1 ml-3">
-          <Text className="text-slate-100 font-subtitle text-base flex-1">
-            {title}
-          </Text>
+          <View className="flex-row items-center">
+            <Text className="text-slate-100 font-subtitle text-base flex-1">
+              {title}
+            </Text>
+
+            {quantity > 0 ? (
+              <Text className="text-slate-400 font-subtitle text-sm">
+                X {quantity}
+              </Text>
+            ) : null}
+          </View>
+
           <Text className="text-slate-400 font-body text-xs leading-5 mt-0.5">
             {description}
           </Text>
